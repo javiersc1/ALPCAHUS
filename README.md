@@ -39,10 +39,10 @@ $y_i \in \mathbb{R}^D$.
 We generalize above
 to model the data
 with a union of subspaces model as follows
-$$y_i  = x_i  + \epsilon_i$$
-$$x_i  = U_{k_i} z_i
-\text{ for some }
-k_i \in \{1, \ldots, K \}$$
+```math
+y_i  = x_i  + \epsilon_i \\
+x_i  = U_{k_i} z_i \text{ for some } k_i \in \{1, \ldots, K \}
+```
 where
 $U_k \in \mathbb{R}^{D \times d_k}$ is a subspace basis that
 has subspace dimension $d_k$. Here $z_i \in \mathbb{R}^{d_k}$
@@ -54,10 +54,10 @@ If the subspace bases were known,
 then one would like to find the associated subspace label
 $c_i \in \{ 1, \ldots,K \}$ for each data sample
 by solving the following optimization problem
-$$
-    c_i = \argmin_{k} \| y_i -  U_k U_k^{T} y_i \|_2^2,
+```math
+    c_i = \min_{k} \| y_i -  U_k U_k^{T} y_i \|_2^2,
     \quad \forall y_i \in Y.
-$$
+```
 This label describes the subspace association of a data point $y_i$
 that has the lowest residual between the original sample and its reconstructed value
 given the subspace model.
@@ -81,9 +81,7 @@ for some rank estimate $\hat{d}$. Using the factorized form,
 we propose to estimate $X$
 by solving for $L$ and $R$ in the following optimization problem:
 ```math
-  \min_{L,R,\Pi} \ f(L,R,\Pi)
-```
-```math
+  \min_{L,R,\Pi} \ f(L,R,\Pi) \\
 f(L,R,\Pi) = \frac{1}{2} \| (Y - L R') \Pi^{-1/2} \|_F^2 + \frac{D}{2} \log |\Pi|
 ```
 and extracting the subspace basis by doing $\hat{U} = \text{SVD}(L)$ since both matrices have the same range.
@@ -103,7 +101,7 @@ $\Pi_k \triangleq \Pi_{\mathcal{C}_k}= \text{diag}(\{\nu_i \, :\, c_i = k \})$.
 For the union of subspace measurement model described above
 we generalize ALPCAH with the following optimization problem
 ```math
-\argmin_{\mathcal{L}, \, \mathcal{R}, \, \Pi, \, \mathcal{C}}
+\min_{\mathcal{L}, \, \mathcal{R}, \, \Pi, \, \mathcal{C}}
 \sum_{k=1}^K \frac{1}{2} \| (Y_k - L_k R^T_k ) \Pi^{-1/2}_{k} \|_F^2
 + \frac{D}{2} \log | \Pi_k |
 ```
@@ -120,19 +118,19 @@ we alternate between updating subspace bases given cluster estimates
 and updating cluster estimates by projection given subspace bases estimates.
 We solve this optimization problem via alternating minimization between basis estimation $\forall k \in \{1, \ldots,K\}$ solve
 ```math
-\argmin_{L_k, \, R_k, \, \Pi_k}
+\min_{L_k, \, R_k, \, \Pi_k}
 \frac{1}{2} \| (Y_k - L_k R_k^T) \Pi_k^{-1/2} \|_F^2 
 + \frac{D}{2} \log|\Pi_k| \quad \text{s.t.} \quad \Pi_k \succeq \alpha I
 ```
 and data sample reassignment $\forall i \in \{1, \ldots, N\}$ solve
 ```math
-    c_i^{(t_2 +1)} = \argmin_{k} J_{i}(k) = \| y_{i} -  U_k U_k^{T} y_{i} \|_2^2 \quad \text{s.t.} \quad \\
+    c_i^{(t_2 +1)} = \min_{k} J_{i}(k) = \| y_{i} -  U_k U_k^{T} y_{i} \|_2^2 \quad \text{s.t.} \quad \\
     c_i^{(t_2 +1)} \gets c_i^{(t_2)} \text{ if } \exists \tilde{k} \in \mathcal{S}_{J_i} \neq c_i^{(t_2)} \text{ such that } \\
     J_{i}(c_i^{(t_2)}) = J_{i} (\tilde{k}) \text{ occurs}.
 ```
 
 # Installation
-This repo contains Julia code for ALPCAHUS tested on Julia 1.11. The dependencies for this code is quite small, our code works with basic {LinearAlgebra, Plots, Random, Distributions, Statistics} julia libraries..
+This repo contains Julia code for ALPCAHUS tested on Julia 1.11. The dependencies for this code is quite small, our code works with basic {LinearAlgebra, Plots, Random, Distributions, Statistics} julia libraries. However, we advise to also install the TSVD package to compute partial SVDs to speed up computations.
 
 You can run code by downloading this repo and including the files that contain code in your julia file / notebook. All code is contained in the two files below.
 ```julia
