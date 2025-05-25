@@ -90,14 +90,14 @@ and extracting the subspace basis by doing $\hat{U} = \text{SVD}(L)$ since both 
 
 For notational simplicity,
 let 
-$Y_k \triangleq Y_{\mathcal{C}_k} \in \mathbb{R}^{D \times N_k}$
+$Y_k = Y_{\mathcal{C}(k)} \in \mathbb{R}^{D \times N_k}$
 denote the submatrix of $Y$
 having columns corresponding to data samples
 that are estimated to belong in the $k$-th subspaces,
-i.e., $Y_k =Y_{\mathcal{C}_k} = \text{matrix}( \{ y_i \, : \, c_i = k \})$.
+i.e., $Y_k =Y_{\mathcal{C}(k)} = \text{matrix}( \{ y_i \, : \, c_i = k \})$.
 We apply this notation similarly to other matrices
 such as
-$\Pi_k \triangleq \Pi_{\mathcal{C}_k}= \text{diag}(\{\nu_i \, :\, c_i = k \})$.
+$\Pi_k = \Pi_{\mathcal{C}(k)}= \text{diag}(\{\nu_i \, :\, c_i = k \})$.
 For the union of subspace measurement model described above
 we generalize ALPCAH with the following optimization problem
 ```math
@@ -124,10 +124,15 @@ We solve this optimization problem via alternating minimization between basis es
 ```
 and data sample reassignment $\forall i \in \{1, \ldots, N\}$ solve
 ```math
-    c_i^{(t_2 +1)} = \min_{k} J_{i}(k) = \| y_{i} -  U_k U_k^{T} y_{i} \|_2^2 \quad \text{s.t.} \quad \\
-    c_i^{(t_2 +1)} \gets c_i^{(t_2)} \text{ if } \exists \tilde{k} \in \mathcal{S}_{J_i} \neq c_i^{(t_2)} \text{ such that } \\
+    c_i^{(t_2 +1)} = \min_{k} J_{i}(k) = \| y_{i} -  U_k U_k^{T} y_{i} \|_2^2 \quad \text{subject to} \quad
+```
+```math
+    c_i^{(t_2 +1)} \gets c_i^{(t_2)} \text{ if } \exists \tilde{k} \in \mathcal{S}_{J_i} \neq c_i^{(t_2)} \text{ such that }
+```
+```math
     J_{i}(c_i^{(t_2)}) = J_{i} (\tilde{k}) \text{ occurs}.
 ```
+See the paper for further details on objective function definitions and mathematical derivations. 
 
 # Installation
 This repo contains Julia code for ALPCAHUS tested on Julia 1.11. The dependencies for this code is quite small, our code works with basic {LinearAlgebra, Plots, Random, Distributions, Statistics} julia libraries. However, we advise to also install the TSVD package to compute partial SVDs to speed up computations.
