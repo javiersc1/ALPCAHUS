@@ -1,0 +1,6 @@
+*.fits
+*/.ipynb_checkpoints
+*.DS_Store
+figures
+depricated
+failed_experiments

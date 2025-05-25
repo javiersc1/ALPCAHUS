@@ -2,7 +2,7 @@ using LinearAlgebra
 using TSVD
 using FlipPA
 
-function ALPCAHUS(X::Matrix, K::Int, d::Vector; T::Int=3, B::Int=128, q::Int=24,
+function ALPCAHUS(X::Matrix, K::Int, d::Vector; T::Int=3, B::Int=128, q::Int=64,
     subspaceMethod::Symbol=:alpcah, fastCompute::Bool=false, alpcahIter::Int=10,
     finalStep::Bool=true, varfloor::Real=1e-9, spectralStart::Bool=false,
     adaptiveRank::Bool=false, quantileAmount::Real=0.9, flipTrials::Int=100,
